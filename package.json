@@ -1,0 +1,28 @@
+{
+  "name": "appengine-hello-world",
+  "description": "Trainee Pitang Agendamento Vacina Covid.",
+  "version": "0.0.2",
+  "private": true,
+  "license": "Apache-2.0",
+  "author": "merciof",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GoogleCloudPlatform/nodejs-docs-samples.git"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "test": "mocha --exit test/*.test.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "mocha": "^9.0.0",
+    "supertest": "^6.0.0"
+  }
+}
