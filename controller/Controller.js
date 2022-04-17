@@ -4,13 +4,20 @@ export class Controller {
   }
 
   async index(request, response) {
-    const users = await this.model.find({}).lean();
+    const appointments = await this.model.find({}).lean();
 
-    response.json(users);
+    response.json(appointments);
   }
 
   async create(request, response) {
-    const element = await this.model.create(request.body);
+    let element = null;
+
+    try {
+      element = await this.model.create(request.body);
+    } catch (error) {
+      response.status(400).send(error.message);
+      return;
+    }
 
     response.send(element);
   }
@@ -18,10 +25,10 @@ export class Controller {
   async read(request, response) {
     const id = request.params.id;
 
-    const user = await this.model.findById(id);
+    const appointment = await this.model.findById(id);
 
-    if (user) {
-      return response.send(user);
+    if (appointment) {
+      return response.send(appointment);
     }
 
     response.status(404).send({ message: "Element does not exist" });
