@@ -32,7 +32,6 @@ export class AppointmentController extends Controller {
     }
   }
 
-  // TODO
   async validateAppointmentByDay(dateString) {
     // quantos agendamentos existem nesse dia?
     // menos de 20??
@@ -101,5 +100,89 @@ export class AppointmentController extends Controller {
     }
 
     return false;
+  }
+
+  // regras de api restfull??
+  async getAppointmentsByDay(request, response) {
+    const dateObject = new Date(request.body.appointmentDate);
+
+    const startDate = new Date(
+      dateObject.getFullYear(),
+      dateObject.getMonth(),
+      dateObject.getDate()
+    );
+
+    const endDate = new Date(
+      dateObject.getFullYear(),
+      dateObject.getMonth(),
+      dateObject.getDate() + 1
+    );
+
+    const appointments = await this.model
+      .find({
+        appointmentDate: {
+          $gte: startDate,
+          $lt: endDate,
+        },
+      })
+      .lean();
+
+    response.send(appointments);
+  }
+
+  async getAppointmentsByHour(request, response) {
+    const dateObject = new Date(request.body.appointmentDate);
+
+    const startDate = new Date(
+      dateObject.getFullYear(),
+      dateObject.getMonth(),
+      dateObject.getDate(),
+      dateObject.getHours()
+    );
+
+    const endDate = new Date(
+      dateObject.getFullYear(),
+      dateObject.getMonth(),
+      dateObject.getDate(),
+      dateObject.getHours() + 1
+    );
+
+    const appointments = await this.model
+      .find({
+        appointmentDate: {
+          $gte: startDate,
+          $lt: endDate,
+        },
+      })
+      .lean();
+
+    response.send(appointments);
+  }
+
+  async getAppointmentsByMonth(request, response) {
+    const dateObject = new Date(request.body.appointmentDate);
+
+    const startDate = new Date(
+      dateObject.getFullYear(),
+      dateObject.getMonth(),
+      dateObject.getDate()
+    );
+
+    const endDate = new Date(
+      dateObject.getFullYear(),
+      dateObject.getMonth() + 1,
+      dateObject.getDate()
+    );
+
+    const appointments = await this.model
+      .find({
+        appointmentDate: {
+          $gte: startDate,
+          $lt: endDate,
+        },
+      })
+      .lean();
+
+    response.send(appointments);
   }
 }
