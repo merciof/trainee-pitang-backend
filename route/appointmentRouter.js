@@ -7,6 +7,7 @@ const appointmentRouter = Router();
 
 const appointmentController = new AppointmentController(appointmentModel);
 
+// default CRUD
 appointmentRouter.get(
   "/appointment",
   appointmentController.index.bind(appointmentController)
@@ -26,6 +27,20 @@ appointmentRouter.put(
 appointmentRouter.delete(
   "/appointment/:id",
   appointmentController.delete.bind(appointmentController)
+);
+
+// custom methods
+appointmentRouter.post(
+  "/getAppointmentsByDay",
+  appointmentController.getAppointmentsByDay.bind(appointmentController)
+);
+appointmentRouter.post(
+  "/getAppointmentsByHour",
+  appointmentController.getAppointmentsByHour.bind(appointmentController)
+);
+appointmentRouter.post(
+  "/getAppointmentsByMonth",
+  appointmentController.getAppointmentsByMonth.bind(appointmentController)
 );
 
 export { appointmentRouter };
