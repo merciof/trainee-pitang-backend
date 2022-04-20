@@ -3,7 +3,10 @@ import { Router } from "express";
 import { AppointmentController } from "../controller/AppointmentController.js";
 import { appointmentModel } from "../model/appointmentModel.js";
 
-import { appointmentSchema } from "../validations/appointmentValidation.js";
+import {
+  createAppointmentSchema,
+  getAppointmentSchema,
+} from "../validations/appointmentValidation.js";
 import { validation } from "../middleware/validationMiddleware.js";
 
 const appointmentRouter = Router();
@@ -17,7 +20,7 @@ appointmentRouter.get(
 );
 appointmentRouter.post(
   "/appointment",
-  validation(appointmentSchema),
+  validation(createAppointmentSchema),
   appointmentController.create.bind(appointmentController)
 );
 appointmentRouter.get(
@@ -26,7 +29,7 @@ appointmentRouter.get(
 );
 appointmentRouter.put(
   "/appointment/:id",
-  validation(appointmentSchema),
+  validation(createAppointmentSchema),
   appointmentController.update.bind(appointmentController)
 );
 appointmentRouter.delete(
@@ -37,17 +40,17 @@ appointmentRouter.delete(
 // custom methods
 appointmentRouter.post(
   "/getAppointmentsByDay",
-  validation(appointmentSchema),
+  validation(getAppointmentSchema),
   appointmentController.getAppointmentsByDay.bind(appointmentController)
 );
 appointmentRouter.post(
   "/getAppointmentsByHour",
-  validation(appointmentSchema),
+  validation(getAppointmentSchema),
   appointmentController.getAppointmentsByHour.bind(appointmentController)
 );
 appointmentRouter.post(
   "/getAppointmentsByMonth",
-  validation(appointmentSchema),
+  validation(getAppointmentSchema),
   appointmentController.getAppointmentsByMonth.bind(appointmentController)
 );
 
