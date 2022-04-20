@@ -137,15 +137,19 @@ export class AppointmentController extends Controller {
   }
 
   async getAppointments(startDate, endDate) {
-    const appointments = await this.model
-      .find({
-        appointmentDate: {
-          $gte: startDate,
-          $lt: endDate,
-        },
-      })
-      .lean();
+    try {
+      const appointments = await this.model
+        .find({
+          appointmentDate: {
+            $gte: startDate,
+            $lt: endDate,
+          },
+        })
+        .lean();
 
-    return appointments;
+      return appointments;
+    } catch (error) {
+      response.status(400).send(error.message);
+    }
   }
 }
