@@ -13,22 +13,24 @@ export class AppointmentController extends Controller {
 
     let date = moment(request.body.appointmentDate).format("l");
 
-    if (
-      (await this.validateAppointmentByDay(request.body.appointmentDate)) &&
-      this.validateAppointmentByHour(request.body.appointmentDate)
-    ) {
-      try {
-        element = await this.model.create(request.body);
-      } catch (error) {
-        response.status(400).send(error.message);
-        return;
+    if (await this.validateAppointmentByHour(request.body.appointmentDate)) {
+      if (await this.validateAppointmentByDay(request.body.appointmentDate)) {
+        try {
+          element = await this.model.create(request.body);
+        } catch (error) {
+          response.status(400).send(error.message);
+          return;
+        }
+        response.send(element);
+      } else {
+        response
+          .status(400)
+          .send(`Excedido numero máximo de 20 consultas para ${date}.`);
       }
-
-      response.send(element);
     } else {
       response
         .status(400)
-        .send(`Excedido numero máximo de 20 consultas para ${date}.`);
+        .send(`Excedido numero máximo de 2 consultas por hora.`);
     }
   }
 
