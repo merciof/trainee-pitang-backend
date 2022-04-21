@@ -14,10 +14,11 @@
     "node": ">=14.0.0"
   },
   "scripts": {
-    "start": "node app.js",
+    "start": "node server.js",
     "test": "mocha --exit test/*.test.js"
   },
   "dependencies": {
+    "chai": "^4.3.6",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "jest": "^27.5.1",
