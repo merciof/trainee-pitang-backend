@@ -112,6 +112,12 @@ export class AppointmentController extends Controller {
     return false;
   }
 
+  /**
+   * it get appointments for a DAY range
+   * @param {*} request - the express request object
+   * @param {*} response - the express response object
+   * @returns {Array} An array of appointment objects
+   */
   async getAppointmentsByDay(request, response) {
     const dateObject = new Date(request.body.appointmentDate);
 
