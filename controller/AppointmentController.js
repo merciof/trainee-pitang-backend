@@ -9,19 +9,16 @@ export class AppointmentController extends Controller {
   }
 
   async create(request, response) {
-    let element = null;
-
     let date = moment(request.body.appointmentDate).format("l");
 
     if (await this.validateAppointmentByHour(request.body.appointmentDate)) {
       if (await this.validateAppointmentByDay(request.body.appointmentDate)) {
         try {
-          element = await this.model.create(request.body);
+          const appointment = await this.model.create(request.body);
+          response.send(appointment);
         } catch (error) {
           response.status(400).send(error.message);
-          return;
         }
-        response.send(element);
       } else {
         response
           .status(400)
