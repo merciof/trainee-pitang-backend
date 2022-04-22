@@ -8,20 +8,23 @@ export class AppointmentController extends Controller {
     moment.locale("pt-br");
   }
 
+  /**
+   * It creates a new appointment if it's date is available
+   * @param {*} request - the express request object
+   * @param {*} response - the express response object
+   * @return {Array} An array of appointment objects
+   */
   async create(request, response) {
-    let element = null;
-
     let date = moment(request.body.appointmentDate).format("l");
 
     if (await this.validateAppointmentByHour(request.body.appointmentDate)) {
       if (await this.validateAppointmentByDay(request.body.appointmentDate)) {
         try {
-          element = await this.model.create(request.body);
+          const appointment = await this.model.create(request.body);
+          response.send(appointment);
         } catch (error) {
           response.status(400).send(error.message);
-          return;
         }
-        response.send(element);
       } else {
         response
           .status(400)
@@ -34,6 +37,11 @@ export class AppointmentController extends Controller {
     }
   }
 
+  /**
+   * It generates two date objects with a hour of range
+   * @param {Date} dateObject - A javascript Date object
+   * @returns {Array} An array containing startDate and endDate
+   */
   getStartEndDateByHour(dateObject) {
     const startDate = new Date(
       dateObject.getFullYear(),
@@ -51,6 +59,11 @@ export class AppointmentController extends Controller {
     return [startDate, endDate];
   }
 
+  /**
+   * It generates two date objects with a DAY of range
+   * @param {Date} dateObject - A javascript Date object
+   * @returns {Array} An array containing startDate and endDate
+   */
   getStartEndDateByDay(dateObject) {
     const startDate = new Date(
       dateObject.getFullYear(),
@@ -67,6 +80,11 @@ export class AppointmentController extends Controller {
     return [startDate, endDate];
   }
 
+  /**
+   * It validates if a given day is ok for a new appointment
+   * @param {String} dateString - a string representing a javascript Date
+   * @returns {Boolean} if the date is or not valid for a new appointment
+   */
   async validateAppointmentByDay(dateString) {
     const dateObject = new Date(dateString);
 
@@ -74,13 +92,18 @@ export class AppointmentController extends Controller {
 
     const appointments = await this.getAppointments(startDate, endDate);
 
-    if (appointments.length < 19) {
+    if (appointments.length < 20) {
       return true;
     }
 
     return false;
   }
 
+  /**
+   * It validates if a given HOUR is ok for a new appointment
+   * @param {String} dateString - a string representing a javascript Date
+   * @returns {Boolean} if the date is or not valid for a new appointment
+   */
   async validateAppointmentByHour(dateString) {
     const dateObject = new Date(dateString);
 
@@ -95,6 +118,12 @@ export class AppointmentController extends Controller {
     return false;
   }
 
+  /**
+   * it get appointments within a DAY range
+   * @param {*} request - the express request object
+   * @param {*} response - the express response object
+   * @returns {Array} An array of appointment objects
+   */
   async getAppointmentsByDay(request, response) {
     const dateObject = new Date(request.body.appointmentDate);
 
@@ -105,6 +134,12 @@ export class AppointmentController extends Controller {
     response.send(appointments);
   }
 
+  /**
+   * it get appointments within a HOUR range
+   * @param {*} request - the express request object
+   * @param {*} response - the express response object
+   * @returns {Array} An array of appointment objects
+   */
   async getAppointmentsByHour(request, response) {
     const dateObject = new Date(request.body.appointmentDate);
 
@@ -115,6 +150,12 @@ export class AppointmentController extends Controller {
     response.send(appointments);
   }
 
+  /**
+   * it get appointments within a MONTH range
+   * @param {*} request - the express request object
+   * @param {*} response - the express response object
+   * @returns {Array} An array of appointment objects
+   */
   async getAppointmentsByMonth(request, response) {
     const dateObject = new Date(request.body.appointmentDate);
 
@@ -135,6 +176,12 @@ export class AppointmentController extends Controller {
     response.send(appointments);
   }
 
+  /**
+   * it get appointments for a given start and end date
+   * @param {Date} startDate - the start date
+   * @param {Date} endDate - the end date
+   * @returns {Array} An array of appointment objects
+   */
   async getAppointments(startDate, endDate) {
     try {
       const appointments = await this.model
