@@ -95,7 +95,6 @@ export class AppointmentController extends Controller {
     return false;
   }
 
-  // regras de api restfull??
   async getAppointmentsByDay(request, response) {
     const dateObject = new Date(request.body.appointmentDate);
 
