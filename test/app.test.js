@@ -92,3 +92,30 @@ describe("POST /api/getAppointmentsByHour with missing data", function () {
 });
 
 // endpoint /api/getAppointmentsByMonth
+
+describe("POST /api/getAppointmentsByMonth", function () {
+  it("should respond with a 200 status code", async function () {
+    const response = await request(app)
+      .post("/api/getAppointmentsByMonth/")
+      .send({ appointmentDate: "2022-03-02T02:00:00.000Z" });
+    expect(response.statusCode).to.equal(200);
+  });
+});
+
+describe("POST /api/getAppointmentsByMonth with missing data", function () {
+  it("should respond with a 400 status code", async function () {
+    const response = await request(app)
+      .post("/api/getAppointmentsByMonth/")
+      .send({});
+    expect(response.statusCode).to.equal(400);
+  });
+
+  it("should brind an error message", async function () {
+    const requestBody = {};
+
+    const response = await request(app)
+      .post("/api/getAppointmentsByMonth/")
+      .send(requestBody);
+    expect(response.body.message).to.equal("requerido");
+  });
+});
