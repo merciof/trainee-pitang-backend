@@ -92,7 +92,7 @@ export class AppointmentController extends Controller {
 
     const appointments = await this.getAppointments(startDate, endDate);
 
-    if (appointments.length < 19) {
+    if (appointments.length < 20) {
       return true;
     }
 
