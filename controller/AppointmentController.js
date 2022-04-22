@@ -79,7 +79,6 @@ export class AppointmentController extends Controller {
    * @param {String} dateString - a string representing a javascript Date
    * @returns {Boolean} if the date is or not valid for a new appointment
    */
-
   async validateAppointmentByDay(dateString) {
     const dateObject = new Date(dateString);
 
@@ -94,6 +93,11 @@ export class AppointmentController extends Controller {
     return false;
   }
 
+  /**
+   * It validates if a given HOUR is ok for a new appointment
+   * @param {String} dateString - a string representing a javascript Date
+   * @returns {Boolean} if the date is or not valid for a new appointment
+   */
   async validateAppointmentByHour(dateString) {
     const dateObject = new Date(dateString);
 
