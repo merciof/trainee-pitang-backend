@@ -8,6 +8,12 @@ export class AppointmentController extends Controller {
     moment.locale("pt-br");
   }
 
+  /**
+   * It creates a new appointment if it's date is available
+   * @param {*} request - the express request object
+   * @param {*} response - the express response object
+   * @return {Array} An array of appointment objects
+   */
   async create(request, response) {
     let date = moment(request.body.appointmentDate).format("l");
 
@@ -113,7 +119,7 @@ export class AppointmentController extends Controller {
   }
 
   /**
-   * it get appointments for a DAY range
+   * it get appointments within a DAY range
    * @param {*} request - the express request object
    * @param {*} response - the express response object
    * @returns {Array} An array of appointment objects
@@ -128,6 +134,12 @@ export class AppointmentController extends Controller {
     response.send(appointments);
   }
 
+  /**
+   * it get appointments within a HOUR range
+   * @param {*} request - the express request object
+   * @param {*} response - the express response object
+   * @returns {Array} An array of appointment objects
+   */
   async getAppointmentsByHour(request, response) {
     const dateObject = new Date(request.body.appointmentDate);
 
@@ -138,6 +150,12 @@ export class AppointmentController extends Controller {
     response.send(appointments);
   }
 
+  /**
+   * it get appointments within a MONTH range
+   * @param {*} request - the express request object
+   * @param {*} response - the express response object
+   * @returns {Array} An array of appointment objects
+   */
   async getAppointmentsByMonth(request, response) {
     const dateObject = new Date(request.body.appointmentDate);
 
@@ -158,6 +176,12 @@ export class AppointmentController extends Controller {
     response.send(appointments);
   }
 
+  /**
+   * it get appointments for a given start and end date
+   * @param {Date} startDate - the start date
+   * @param {Date} endDate - the end date
+   * @returns {Array} An array of appointment objects
+   */
   async getAppointments(startDate, endDate) {
     try {
       const appointments = await this.model
