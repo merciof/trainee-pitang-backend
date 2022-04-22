@@ -19,10 +19,4 @@ app.use(express.json());
 
 app.use("/api", appointmentRouter);
 
-const PORT = parseInt(process.env.PORT) || 8080;
-
-app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
-});
-
 export default app;
