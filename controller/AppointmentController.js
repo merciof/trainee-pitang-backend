@@ -31,6 +31,11 @@ export class AppointmentController extends Controller {
     }
   }
 
+  /**
+   * It generates two date objects with a hour of range
+   * @param {Date} dateObject - A javascript Date object
+   * @returns {Array} An array containing startDate and endDate
+   */
   getStartEndDateByHour(dateObject) {
     const startDate = new Date(
       dateObject.getFullYear(),
