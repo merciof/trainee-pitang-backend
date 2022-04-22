@@ -34,12 +34,24 @@ export class AppointmentController extends Controller {
     }
   }
 
-  async validateAppointmentByDay(dateString) {
-    // quantos agendamentos existem nesse dia?
-    // menos de 20??
+  getStartEndDateByHour(dateObject) {
+    const startDate = new Date(
+      dateObject.getFullYear(),
+      dateObject.getMonth(),
+      dateObject.getDate(),
+      dateObject.getHours()
+    );
 
-    const dateObject = new Date(dateString);
+    const endDate = new Date(
+      dateObject.getFullYear(),
+      dateObject.getMonth(),
+      dateObject.getDate(),
+      dateObject.getHours() + 1
+    );
+    return [startDate, endDate];
+  }
 
+  getStartEndDateByDay(dateObject) {
     const startDate = new Date(
       dateObject.getFullYear(),
       dateObject.getMonth(),
@@ -52,14 +64,15 @@ export class AppointmentController extends Controller {
       dateObject.getDate() + 1
     );
 
-    const appointments = await this.model
-      .find({
-        appointmentDate: {
-          $gte: startDate,
-          $lt: endDate,
-        },
-      })
-      .lean();
+    return [startDate, endDate];
+  }
+
+  async validateAppointmentByDay(dateString) {
+    const dateObject = new Date(dateString);
+
+    const [startDate, endDate] = this.getStartEndDateByDay(dateObject);
+
+    const appointments = await this.getAppointments(startDate, endDate);
 
     if (appointments.length < 19) {
       return true;
@@ -69,33 +82,11 @@ export class AppointmentController extends Controller {
   }
 
   async validateAppointmentByHour(dateString) {
-    // quantos agendamentos existem nessa hora
-    // menos de dois??
-
     const dateObject = new Date(dateString);
 
-    const startDate = new Date(
-      dateObject.getFullYear(),
-      dateObject.getMonth(),
-      dateObject.getDate(),
-      dateObject.getHours()
-    );
+    const [startDate, endDate] = this.getStartEndDateByHour(dateObject);
 
-    const endDate = new Date(
-      dateObject.getFullYear(),
-      dateObject.getMonth(),
-      dateObject.getDate(),
-      dateObject.getHours() + 1
-    );
-
-    const appointments = await this.model
-      .find({
-        appointmentDate: {
-          $gte: startDate,
-          $lt: endDate,
-        },
-      })
-      .lean();
+    const appointments = await this.getAppointments(startDate, endDate);
 
     if (appointments.length < 2) {
       return true;
@@ -104,30 +95,12 @@ export class AppointmentController extends Controller {
     return false;
   }
 
-  // regras de api restfull??
   async getAppointmentsByDay(request, response) {
     const dateObject = new Date(request.body.appointmentDate);
 
-    const startDate = new Date(
-      dateObject.getFullYear(),
-      dateObject.getMonth(),
-      dateObject.getDate()
-    );
+    const [startDate, endDate] = this.getStartEndDateByDay(dateObject);
 
-    const endDate = new Date(
-      dateObject.getFullYear(),
-      dateObject.getMonth(),
-      dateObject.getDate() + 1
-    );
-
-    const appointments = await this.model
-      .find({
-        appointmentDate: {
-          $gte: startDate,
-          $lt: endDate,
-        },
-      })
-      .lean();
+    const appointments = await this.getAppointments(startDate, endDate);
 
     response.send(appointments);
   }
@@ -135,28 +108,9 @@ export class AppointmentController extends Controller {
   async getAppointmentsByHour(request, response) {
     const dateObject = new Date(request.body.appointmentDate);
 
-    const startDate = new Date(
-      dateObject.getFullYear(),
-      dateObject.getMonth(),
-      dateObject.getDate(),
-      dateObject.getHours()
-    );
+    const [startDate, endDate] = this.getStartEndDateByHour(dateObject);
 
-    const endDate = new Date(
-      dateObject.getFullYear(),
-      dateObject.getMonth(),
-      dateObject.getDate(),
-      dateObject.getHours() + 1
-    );
-
-    const appointments = await this.model
-      .find({
-        appointmentDate: {
-          $gte: startDate,
-          $lt: endDate,
-        },
-      })
-      .lean();
+    const appointments = await this.getAppointments(startDate, endDate);
 
     response.send(appointments);
   }
@@ -176,15 +130,25 @@ export class AppointmentController extends Controller {
       dateObject.getDate()
     );
 
-    const appointments = await this.model
-      .find({
-        appointmentDate: {
-          $gte: startDate,
-          $lt: endDate,
-        },
-      })
-      .lean();
+    const appointments = await this.getAppointments(startDate, endDate);
 
     response.send(appointments);
+  }
+
+  async getAppointments(startDate, endDate) {
+    try {
+      const appointments = await this.model
+        .find({
+          appointmentDate: {
+            $gte: startDate,
+            $lt: endDate,
+          },
+        })
+        .lean();
+
+      return appointments;
+    } catch (error) {
+      response.status(400).send(error.message);
+    }
   }
 }
