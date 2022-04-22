@@ -53,6 +53,11 @@ export class AppointmentController extends Controller {
     return [startDate, endDate];
   }
 
+  /**
+   * It generates two date objects with a DAY of range
+   * @param {Date} dateObject - A javascript Date object
+   * @returns {Array} An array containing startDate and endDate
+   */
   getStartEndDateByDay(dateObject) {
     const startDate = new Date(
       dateObject.getFullYear(),
