@@ -1,5 +1,7 @@
 # trainee-pitang-backend
 
+[MIT License](./LICENSE) © [Mércio Filho](https://github.com/merciof)
+
 ## :bulb: Introduction
 
 This project is a REST API for appointments CRUD and management.
