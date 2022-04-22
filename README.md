@@ -1,9 +1,5 @@
 # trainee-pitang-backend
 
-# trainee-pitang
-
-agendamento vacina covid
-
 ## :bulb: Introduction
 
 This project is a REST API for appointments CRUD and management.
