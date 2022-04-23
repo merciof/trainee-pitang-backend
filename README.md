@@ -6,6 +6,13 @@
 
 This project is a REST API for appointments CRUD and management.
 
+## :house: Getting started
+
+1. Clone this repo.
+2. Install the dependencies using your favorite package manager ( yarn install or npm install ).
+3. **Important:** Rename the file config/**env.example.js** to config/**env.js** and **add a mongodb database URI.**
+4. Run the app. It will serve by default on port 8080.
+
 ## :tada: Technologies
 
 This project uses the following technologies
@@ -15,13 +22,6 @@ This project uses the following technologies
 - :zap: **Yup** -> For request validation.
 - :zap: **MomentJS** -> For nice visualization of dates.
 - :zap: **Supertest, Mocha and Chai** -> For api endpoints tests.
-
-## :house: Getting started
-
-1. Clone this repo.
-2. Install the packages using your favorite package manager ( yarn install or npm install ).
-3. Rename the file config/env.example.js to config/env.js, and add the mongodb database URI.
-4. Run the app.
 
 ## :ticket: Endpoints
 
