@@ -4,7 +4,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 
-import { DATABASE_URI } from "./config/env.js";
+import { DATABASE_URI } from "./config/config.js";
 import { appointmentRouter } from "./route/appointmentRouter.js";
 
 mongoose
