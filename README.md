@@ -8,7 +8,7 @@ This project is a REST API for appointments CRUD and management.
 
 1. Clone this repo.
 2. Install the dependencies using your favorite package manager ( yarn install or npm install ).
-3. **Important:** Rename the file config/**env.example.js** to config/**env.js** and **add a mongodb database URI.**
+3. **Important:** Rename the file config/**config.example.js** to config/**config.js** and **add a mongodb database URI.**
 4. Run the app. It will serve by default on port 8080.
 
 ## :tada: Technologies
@@ -46,4 +46,5 @@ Request body example:
 ```javascript
 {"name":"John Doe","birthDay":"2000-08-30T22:00:00.000Z","appointmentDate": "2022-03-02T02:00:00.000Z"}
 ```
+
 [MIT License](./LICENSE) © [Mércio Filho](https://github.com/merciof)
