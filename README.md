@@ -1,7 +1,5 @@
 # trainee-pitang-backend
 
-[MIT License](./LICENSE) © [Mércio Filho](https://github.com/merciof)
-
 ## :bulb: Introduction
 
 This project is a REST API for appointments CRUD and management.
@@ -48,3 +46,4 @@ Request body example:
 ```javascript
 {"name":"John Doe","birthDay":"2000-08-30T22:00:00.000Z","appointmentDate": "2022-03-02T02:00:00.000Z"}
 ```
+[MIT License](./LICENSE) © [Mércio Filho](https://github.com/merciof)
