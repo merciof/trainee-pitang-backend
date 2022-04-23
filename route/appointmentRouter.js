@@ -29,7 +29,6 @@ appointmentRouter.get(
 );
 appointmentRouter.put(
   "/appointment/:id",
-  validation(createAppointmentSchema),
   appointmentController.update.bind(appointmentController)
 );
 appointmentRouter.delete(
