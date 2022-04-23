@@ -20,7 +20,7 @@ This project uses the following technologies
 
 1. Clone this repo.
 2. Install the packages using your favorite package manager ( yarn install or npm install ).
-3. Rename the file config/config.example.js to config/config.js, and add the mongodb database URI.
+3. Rename the file config/env.example.js to config/env.js, and add the mongodb database URI.
 4. Run the app.
 
 ## :ticket: Endpoints
